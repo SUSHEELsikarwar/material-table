@@ -1,0 +1,112 @@
+<ng-container>
+
+  <div flex class="table-container">
+    <!-- Filter -->
+    <mat-toolbar [@fadeInUpButton]>
+      <ng-template #backButton>
+        <div fxFlex >
+          <button mat-stroked-button color="primary"  routerLink="/home">
+            <mat-icon svgIcon="back" class="back-button"></mat-icon>
+            Back</button>
+        </div>
+      </ng-template>
+
+      <form class="example-form" fxFlex style="display: flex;"
+      *ngIf="!isFavouriteState else backButton">
+         <label>
+          <input type="text" placeholder="Search ..." matInput (keyup)="applyFilter($event)">
+        </label>
+      </form>
+
+      <span class="spacer"></span>
+    </mat-toolbar>
+
+    <div class="app-mat-table ">
+    <!-- Table -->
+    <table  class="full-width-table" mat-table [dataSource]="tableDataSource.filteredData
+    | paginate: {itemsPerPage: defaultPageSize, currentPage: p}" matSort
+    (matSortChange)="sortTable($event)" >
+
+
+      <ng-container *ngFor="let tableColumn of tableColumns" [matColumnDef]="tableColumn.name">
+
+        <!-- if sortable column header -->
+        <ng-container *ngIf="tableColumn.isSortable; else notSortable">
+          <th mat-header-cell *matHeaderCellDef [mat-sort-header]="tableColumn.name"
+             >
+            {{tableColumn.name}}
+          </th>
+        </ng-container>
+
+
+        <!-- else not sortable -->
+        <ng-template #notSortable>
+          <th mat-header-cell *matHeaderCellDef [class.text-right]="tableColumn.position == 'right'">
+            {{tableColumn.name}}
+          </th>
+        </ng-template>
+
+        <!-- column data -->
+        <td mat-cell *matCellDef="let element" [class.text-right]="tableColumn.position == 'right'">
+          <ng-container *ngIf="!tableColumn.isAction">
+            {{element | dataPropertyGetter: tableColumn.field}}
+          </ng-container>
+
+          <ng-container *ngIf="tableColumn.isAction">
+            <button mat-button (click)="markFavourite(element)">
+              <mat-icon [svgIcon]="element.isFavourite ? 'starfilled' : 'star'" [style.height]="'20px'">{{rowActionIcon}}</mat-icon>
+            </button>
+          </ng-container>
+        </td>
+
+
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      [ngClass]="{'highlight-row': row.isFavourite || null}"></tr>
+
+      <tr class="mat-row no-data-found" *matNoDataRow>
+        <td class="mat-cell" colspan="9999">
+          <ng-container *ngIf="isFirstTimeLoading && !isClientSideData" >
+            <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+          </ng-container>
+
+          <ng-container *ngIf="!isFirstTimeLoading || isClientSideData"><div style="height: calc(100vh - 238px);
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;">
+            No Records To Display
+          </div>
+        </ng-container>
+        </td>
+      </tr>
+
+
+    </table>
+
+    </div>
+
+  </div>
+
+  <!-- Pagination -->
+  <div fxLayout class="footer">
+    <pagination-controls (pageChange)="p =
+    $event;" maxSize="5" previousLabel="" nextLabel=""
+    ></pagination-controls>
+    <div fxLayout class="page-size-wrapper">
+      <mat-label class="view-label">View</mat-label>
+      <mat-form-field  class="pagination-size">
+        <mat-select [(value)]="defaultPageSize">
+          <mat-option *ngFor="let option of paginationSizes" [value]="option">{{option}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+
+  </div>
+
+
+</ng-container>

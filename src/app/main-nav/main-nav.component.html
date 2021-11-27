@@ -1,0 +1,23 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)"
+  >
+    <mat-nav-list fxLayout="column" fxLayoutAlign="space-between center">
+      <mat-icon svgIcon="home" class="home"   routerLink="/home"
+      routerLinkActive="active-link" ></mat-icon>
+     <mat-icon svgIcon="add" class="fav"  routerLink="/bookmark"
+     routerLinkActive="active-link"></mat-icon>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+  <div style="height:100%;width: 100%; position:relative"  >
+    <router-outlet #routerRef="outlet" ></router-outlet>
+  </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

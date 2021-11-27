@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files*/
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+@font-face {
+  font-family: Roboto;
+  src: url(/assets/fonts/Roboto/Roboto-Regular.ttf) format("truetype");
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', 'arial', sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+mat-sidenav-content.mat-drawer-content.mat-sidenav-content {
+    background: white;
+}
+
+
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+
+::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 20px;
+  }
+
+::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 20px;
+  }
