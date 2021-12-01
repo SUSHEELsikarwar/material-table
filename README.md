@@ -1,6 +1,6 @@
 # :zap: Angular Material Table Demo
 
-* App using the [Angular Material design component library](https://material.angular.io/) to add a table using mat-table and experiment with different themes.
+* App using the [Angular Material design component library](https://material.angular.io/) to add a table using mat-table.
 * **Note:** to open web links in a new window use: _ctrl+click on link_
 
 ## :floppy_disk: Setup
